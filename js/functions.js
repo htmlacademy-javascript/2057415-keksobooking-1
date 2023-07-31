@@ -1,20 +1,23 @@
 //Первая функция: Палиндром
-function isPalindrom (string) {
+const isPalindrom = (string) => {
   for (let i = 0, j = string.length - 1; i < j; i++, j--) {
     if(string[i] !== string[j]) {
       return false;
     }
   }
   return true;
-}
+};
 isPalindrom ('кекс');
 
 //Вторая функция: Извлечение цифр
 const numberFunction = (string) => {
+  if (typeof string === 'number') {
+    return string;
+  }
   let selection = '';
-  for(let i = 0; i <= string.length; i++){
-    if(!isNaN(string[i]) && string[i] !== ' '){
-      selection += parseInt(string[i], 10);
+  for(let i = 0; i <= string.length; i++) {
+    if(!Number.isNaN(parseInt(string.at(i), 10))) {
+      selection += string.at(i);
     }
   }
   return parseInt(selection, 10);
