@@ -30,10 +30,10 @@ const CHECK_OUT = ['12:00', '13:00', '14:00'];
 
 // Массивы со случайными данными
 const OFFER_TITLES = ['Квартира в прекрасном районе Санкт-Петербурга', 'Квартира в районе Патриарших прудов', 'Квартира в пешей доступности от метро Измайловская'];
-const TYPE_HOUSE = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const TYPE_HOUSES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const ADD_CHIPS = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const SPECIFICATION = ['Хорошая квартира', 'Квартира в ужасном состоянии', 'Уютная студия'];
-const REAL_ESTATE_PHOTO = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+const SPECIFICATIONS = ['Хорошая квартира', 'Квартира в ужасном состоянии', 'Уютная студия'];
+const REAL_ESTATE_PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 
@@ -59,14 +59,14 @@ const createData = (index) => {
       title: OFFER_TITLES[getRandomNumber(0, OFFER_TITLES.length - 1)],
       address: `${location.lat}, ${location.lng}`,
       price: getRandomNumber(1, 50000),
-      type: TYPE_HOUSE[getRandomNumber(0, TYPE_HOUSE.length - 1)],
+      type: TYPE_HOUSES[getRandomNumber(0, TYPE_HOUSES.length - 1)],
       rooms: getRandomNumber(1, 5),
       guests: getRandomNumber(1, 9),
       checkin: CHECK_IN[getRandomNumber(0, CHECK_IN.length - 1)],
       checkout: CHECK_OUT[getRandomNumber(0, CHECK_OUT.length - 1)],
       features: ADD_CHIPS[getRandomNumber(0, ADD_CHIPS.length - 1)],
-      description: SPECIFICATION[getRandomNumber(0, SPECIFICATION.length - 1)],
-      photos: REAL_ESTATE_PHOTO.slice(0, getRandomNumber(0, REAL_ESTATE_PHOTO.length - 1)),
+      description: SPECIFICATIONS[getRandomNumber(0, SPECIFICATIONS.length - 1)],
+      photos: REAL_ESTATE_PHOTOS.slice(0, getRandomNumber(0, REAL_ESTATE_PHOTOS.length - 1)),
     },
     location
   };
