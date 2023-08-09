@@ -24,8 +24,9 @@ function getRandomNumber (min, max) {
   return Math.round(min + Math.random() * (max - min));
 }
 
-const checkIn = ['12:00', '13:00', '14:00'];
-const checkOut = ['12:00', '13:00', '14:00'];
+const ARRAY_COUNT = 10;
+const CHECK_IN = ['12:00', '13:00', '14:00'];
+const CHECK_OUT = ['12:00', '13:00', '14:00'];
 
 // Массивы со случайными данными
 const OFFER_TITLES = ['Квартира в прекрасном районе Санкт-Петербурга', 'Квартира в районе Патриарших прудов', 'Квартира в пешей доступности от метро Измайловская'];
@@ -37,11 +38,11 @@ const REAL_ESTATE_PHOTO = ['https://assets.htmlacademy.ru/content/intensive/java
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 
 // Расчет координат
-const calculationLat = () => {
+const CALCULATION_LAT = () => {
   getRandomFractionNumber(35.65000, 35.70000, 5);
 };
 
-const calculationLng = () => {
+const CALCULATION_LNG = () => {
   getRandomFractionNumber(139.70000, 139.80000, 5);
 };
 
@@ -49,7 +50,7 @@ const formatNumber = (number) => (number < 10) ? `0${number}` : number;
 formatNumber();
 
 const createData = (index) => {
-  const location = { lat: calculationLat (), lng: calculationLng () };
+  const location = { lat: CALCULATION_LAT (), lng: CALCULATION_LNG () };
   return {
     author: {
       avatar: `img/avatars/user${formatNumber(index)}.png`
@@ -61,8 +62,8 @@ const createData = (index) => {
       type: TYPE_HOUSE[getRandomNumber(0, TYPE_HOUSE.length - 1)],
       rooms: getRandomNumber(1, 5),
       guests: getRandomNumber(1, 9),
-      checkin: checkIn[getRandomNumber(0, checkIn.length - 1)],
-      checkout: checkOut[getRandomNumber(0, checkOut.length - 1)],
+      checkin: CHECK_IN[getRandomNumber(0, CHECK_IN.length - 1)],
+      checkout: CHECK_OUT[getRandomNumber(0, CHECK_OUT.length - 1)],
       features: ADD_CHIPS[getRandomNumber(0, ADD_CHIPS.length - 1)],
       description: SPECIFICATION[getRandomNumber(0, SPECIFICATION.length - 1)],
       photos: REAL_ESTATE_PHOTO.slice(0, getRandomNumber(0, REAL_ESTATE_PHOTO.length - 1)),
@@ -71,4 +72,4 @@ const createData = (index) => {
   };
 };
 
-Array.from({length: 10}, createData);
+Array.from({length: ARRAY_COUNT}, createData);
