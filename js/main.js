@@ -1,10 +1,10 @@
-const getRandomFractionNumber = (minValue, maxValue, numberPoint) => {
-  if (maxValue < minValue) {
-    [minValue, maxValue] = [maxValue, minValue];
-  }
-
+const getRandomNumber = (minValue, maxValue, numberPoint) => {
   if (minValue < 0 || maxValue < 0) {
     return 'Ошибка ввода данных. Значение не может быть меньше 0';
+  }
+
+  if (maxValue < minValue) {
+    [minValue, maxValue] = [maxValue, minValue];
   }
 
   const randomNumber = minValue + Math.random() * (maxValue - minValue);
@@ -12,17 +12,22 @@ const getRandomFractionNumber = (minValue, maxValue, numberPoint) => {
   return Number(randomNumber.toFixed(numberPoint));
 };
 
-function getRandomNumber (min, max) {
-  if (max < min) {
-    [min, max] = [max, min];
+const getRandomArray = (items) => {
+  const arrLength = getRandomNumber(0, items.length - 1);
+  const result = [];
+
+  if(arrLength === 0) {
+    return result;
   }
 
-  if (min < 0 || max < 0) {
-    return 'Ошибка ввода данных. Значение не может быть меньше 0';
+  while (result.length < arrLength) {
+    const item = items[getRandomNumber(0, items.length - 1)];
+    if (!result.includes(item)) {
+      result.push(item);
+    }
   }
-
-  return Math.round(min + Math.random() * (max - min));
-}
+  return result;
+};
 
 const ARRAY_COUNT = 10;
 const CHECK_IN = ['12:00', '13:00', '14:00'];
@@ -38,19 +43,14 @@ const REAL_ESTATE_PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/jav
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 
 // Расчет координат
-const CALCULATION_LAT = () => {
-  getRandomFractionNumber(35.65000, 35.70000, 5);
-};
+const CALCULATION_LAT = () => getRandomNumber(35.65000, 35.70000, 5);
 
-const CALCULATION_LNG = () => {
-  getRandomFractionNumber(139.70000, 139.80000, 5);
-};
+const CALCULATION_LNG = () => getRandomNumber(139.70000, 139.80000, 5);
 
 const formatNumber = (number) => (number < 10) ? `0${number}` : number;
-formatNumber();
 
-const createData = (index) => {
-  const location = { lat: CALCULATION_LAT (), lng: CALCULATION_LNG () };
+const createData = (_, index) => {
+  const location = { lat: CALCULATION_LAT(), lng: CALCULATION_LNG() };
   return {
     author: {
       avatar: `img/avatars/user${formatNumber(index)}.png`
@@ -64,12 +64,14 @@ const createData = (index) => {
       guests: getRandomNumber(1, 9),
       checkin: CHECK_IN[getRandomNumber(0, CHECK_IN.length - 1)],
       checkout: CHECK_OUT[getRandomNumber(0, CHECK_OUT.length - 1)],
-      features: ADD_CHIPS[getRandomNumber(0, ADD_CHIPS.length - 1)],
+      features: getRandomArray(ADD_CHIPS),
       description: SPECIFICATIONS[getRandomNumber(0, SPECIFICATIONS.length - 1)],
-      photos: REAL_ESTATE_PHOTOS.slice(0, getRandomNumber(0, REAL_ESTATE_PHOTOS.length - 1)),
+      photos: getRandomArray(REAL_ESTATE_PHOTOS),
     },
     location
   };
 };
 
-Array.from({length: ARRAY_COUNT}, createData);
+// Отключает eslint на объявленную, но не использованную переменную
+// eslint-disable-next-line
+const myHouse = Array.from({length: ARRAY_COUNT}, createData);
