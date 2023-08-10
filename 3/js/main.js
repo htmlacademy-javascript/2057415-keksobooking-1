@@ -1,10 +1,10 @@
-const getRandomFractionNumber = (minValue, maxValue, numberPoint) => {
-  if (maxValue < minValue) {
-    [minValue, maxValue] = [maxValue, minValue];
-  }
-
+const getRandomNumber = (minValue, maxValue, numberPoint) => {
   if (minValue < 0 || maxValue < 0) {
     return 'Ошибка ввода данных. Значение не может быть меньше 0';
+  }
+
+  if (maxValue < minValue) {
+    [minValue, maxValue] = [maxValue, minValue];
   }
 
   const randomNumber = minValue + Math.random() * (maxValue - minValue);
@@ -12,44 +12,45 @@ const getRandomFractionNumber = (minValue, maxValue, numberPoint) => {
   return Number(randomNumber.toFixed(numberPoint));
 };
 
-function getRandomNumber (min, max) {
-  if (max < min) {
-    [min, max] = [max, min];
+const getRandomArray = (items) => {
+  const arrLength = getRandomNumber(0, items.length - 1);
+  const result = [];
+
+  if(arrLength === 0) {
+    return result;
   }
 
-  if (min < 0 || max < 0) {
-    return 'Ошибка ввода данных. Значение не может быть меньше 0';
+  while (result.length < arrLength) {
+    const item = items[getRandomNumber(0, items.length - 1)];
+    if (!result.includes(item)) {
+      result.push(item);
+    }
   }
+  return result;
+};
 
-  return Math.round(min + Math.random() * (max - min));
-}
-
-const checkIn = ['12:00', '13:00', '14:00'];
-const checkOut = ['12:00', '13:00', '14:00'];
+const ARRAY_COUNT = 10;
+const CHECK_IN = ['12:00', '13:00', '14:00'];
+const CHECK_OUT = ['12:00', '13:00', '14:00'];
 
 // Массивы со случайными данными
 const OFFER_TITLES = ['Квартира в прекрасном районе Санкт-Петербурга', 'Квартира в районе Патриарших прудов', 'Квартира в пешей доступности от метро Измайловская'];
-const TYPE_HOUSE = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const TYPE_HOUSES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const ADD_CHIPS = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const SPECIFICATION = ['Хорошая квартира', 'Квартира в ужасном состоянии', 'Уютная студия'];
-const REAL_ESTATE_PHOTO = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+const SPECIFICATIONS = ['Хорошая квартира', 'Квартира в ужасном состоянии', 'Уютная студия'];
+const REAL_ESTATE_PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 
 // Расчет координат
-const calculationLat = () => {
-  getRandomFractionNumber(35.65000, 35.70000, 5);
-};
+const CALCULATION_LAT = () => getRandomNumber(35.65000, 35.70000, 5);
 
-const calculationLng = () => {
-  getRandomFractionNumber(139.70000, 139.80000, 5);
-};
+const CALCULATION_LNG = () => getRandomNumber(139.70000, 139.80000, 5);
 
 const formatNumber = (number) => (number < 10) ? `0${number}` : number;
-formatNumber();
 
-const createData = (index) => {
-  const location = { lat: calculationLat (), lng: calculationLng () };
+const createData = (_, index) => {
+  const location = { lat: CALCULATION_LAT(), lng: CALCULATION_LNG() };
   return {
     author: {
       avatar: `img/avatars/user${formatNumber(index)}.png`
@@ -58,17 +59,19 @@ const createData = (index) => {
       title: OFFER_TITLES[getRandomNumber(0, OFFER_TITLES.length - 1)],
       address: `${location.lat}, ${location.lng}`,
       price: getRandomNumber(1, 50000),
-      type: TYPE_HOUSE[getRandomNumber(0, TYPE_HOUSE.length - 1)],
+      type: TYPE_HOUSES[getRandomNumber(0, TYPE_HOUSES.length - 1)],
       rooms: getRandomNumber(1, 5),
       guests: getRandomNumber(1, 9),
-      checkin: checkIn[getRandomNumber(0, checkIn.length - 1)],
-      checkout: checkOut[getRandomNumber(0, checkOut.length - 1)],
-      features: ADD_CHIPS[getRandomNumber(0, ADD_CHIPS.length - 1)],
-      description: SPECIFICATION[getRandomNumber(0, SPECIFICATION.length - 1)],
-      photos: REAL_ESTATE_PHOTO.slice(0, getRandomNumber(0, REAL_ESTATE_PHOTO.length - 1)),
+      checkin: CHECK_IN[getRandomNumber(0, CHECK_IN.length - 1)],
+      checkout: CHECK_OUT[getRandomNumber(0, CHECK_OUT.length - 1)],
+      features: getRandomArray(ADD_CHIPS),
+      description: SPECIFICATIONS[getRandomNumber(0, SPECIFICATIONS.length - 1)],
+      photos: getRandomArray(REAL_ESTATE_PHOTOS),
     },
     location
   };
 };
 
-Array.from({length: 10}, createData);
+// Отключает eslint на объявленную, но не использованную переменную
+// eslint-disable-next-line
+const myHouse = Array.from({length: ARRAY_COUNT}, createData);
