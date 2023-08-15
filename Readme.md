@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Юрий Бузорин](https://up.htmlacademy.ru/javascript-individual/1/user/2057415).
-* Наставник: [Андрей Устименко](https://htmlacademy.ru/profile/spiritmoon).
+* Наставник: [Антон Казаков](https://htmlacademy.ru/profile/id798257).
 
 ---
 
