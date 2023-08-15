@@ -31,14 +31,14 @@ const getRandomArray = (items) => {
 
 const formatNumber = (number) => (number < 10) ? `0${number}` : number;
 
-const CALCULATION_LAT = () => getRandomNumber(35.65000, 35.70000, 5);
+const calculationLat = () => getRandomNumber(35.65000, 35.70000, 5);
 
-const CALCULATION_LNG = () => getRandomNumber(139.70000, 139.80000, 5);
+const calculationLng = () => getRandomNumber(139.70000, 139.80000, 5);
 
 export {
   getRandomNumber,
   getRandomArray,
   formatNumber,
-  CALCULATION_LAT,
-  CALCULATION_LNG
+  calculationLat,
+  calculationLng
 };
