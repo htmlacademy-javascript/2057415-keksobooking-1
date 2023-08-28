@@ -1,3 +1,8 @@
+import {
+  getRandomMeHouseDreamArray
+} from './data.js';
+import { getRandomNumber } from './utils.js';
+
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const typesEngToRus = {
@@ -55,6 +60,12 @@ const generateCard = ({ author, offer }) => {
     userPhotoList.classList.add('visually-hidden');
   }
   cardElement.querySelector('.popup__avatar').src = author.avatar;
+  const parentElement = document.querySelector('#map-canvas');
+  parentElement.appendChild(cardElement);
 };
+
+const offers = getRandomMeHouseDreamArray;
+
+generateCard(offers[getRandomNumber(0, offers.length - 1)]);
 
 export {generateCard};
