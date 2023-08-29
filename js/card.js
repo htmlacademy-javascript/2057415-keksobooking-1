@@ -1,11 +1,9 @@
-import {
-  getRandomMeHouseDreamArray
-} from './data.js';
+import { getRandomMeHouseDreamArray } from './data.js';
 import { getRandomNumber } from './utils.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-const typesEngToRus = {
+const typesHouseObj = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
   house: 'Дом',
@@ -28,7 +26,7 @@ const generateCard = ({ author, offer }) => {
   popupTitle.textContent = offer.title;
   popupAdress.textContent = offer.address;
   popupPrice.textContent = `${offer.price}₽/ночь`;
-  popupType.textContent = typesEngToRus[offer.type];
+  popupType.textContent = typesHouseObj[offer.type];
   popupCapacity.textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
   popupTime.textContent = `Заезд после ${offer.checkin} выезд до ${offer.checkout}`;
   const featuresLength = popupFeaturesList.children.length;
