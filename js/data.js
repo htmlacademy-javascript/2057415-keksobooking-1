@@ -2,8 +2,6 @@ import {
   getRandomNumber,
   getRandomArray,
   formatNumber,
-  calculationLat,
-  calculationLng
 } from './utils.js';
 
 import {
@@ -16,6 +14,10 @@ import {
   SPECIFICATIONS,
   REAL_ESTATE_PHOTOS
 } from './const.js';
+
+const calculationLat = () => getRandomNumber(35.65000, 35.70000, 5);
+
+const calculationLng = () => getRandomNumber(139.70000, 139.80000, 5);
 
 const createData = (_, index) => {
   const location = { lat: calculationLat(), lng: calculationLng() };
@@ -42,4 +44,7 @@ const createData = (_, index) => {
 
 const getRandomMeHouseDreamArray = Array.from({length: ARRAY_COUNT}, createData);
 
-export {getRandomMeHouseDreamArray};
+export {
+  getRandomMeHouseDreamArray,
+  createData
+};

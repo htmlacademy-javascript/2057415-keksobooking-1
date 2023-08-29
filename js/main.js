@@ -1,5 +1,1 @@
-import {
-  getRandomMeHouseDreamArray
-} from './data.js';
-
-getRandomMeHouseDreamArray();
+import './card.js';
