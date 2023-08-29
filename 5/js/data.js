@@ -44,4 +44,7 @@ const createData = (_, index) => {
 
 const getRandomMeHouseDreamArray = Array.from({length: ARRAY_COUNT}, createData);
 
-export {getRandomMeHouseDreamArray};
+export {
+  getRandomMeHouseDreamArray,
+  createData
+};
