@@ -2,58 +2,47 @@ const adForm = document.querySelector('.ad-form');
 const adFormElement = adForm.querySelectorAll('fieldset');
 const mapFilter = document.querySelector('.map__filters');
 const mapFilterElement = mapFilter.querySelectorAll('select, fieldset');
-const adFilterElement = adFormElement.concat(mapFilterElement);
 
-const disableForms = () => {
+const disableAdForm = () => {
   adForm.classList.add('ad-form--disabled');
-  mapFilter.classList.add('map__filters--disabled');
 
-  adFilterElement.forEach((element) => {
+  adFormElement.forEach((element) => {
     element.disabled = true;
   });
+};
+
+const disableMapFilter = () => {
+  mapFilter.classList.add('map__filters--disabled');
+
+  mapFilterElement.forEach((element) => {
+    element.disabled = true;
+  });
+};
+
+const enableAdForm = () => {
+  adForm.classList.remove('ad-form--disabled');
+
+  adFormElement.forEach((element) => {
+    element.disabled = false;
+  });
+};
+
+const enableMapFilter = () => {
+  mapFilter.classList.remove('map__filters--disabled');
+
+  mapFilterElement.forEach((element) => {
+    element.disabled = false;
+  });
+};
+
+const disableForms = () => {
+  disableAdForm();
+  disableMapFilter();
 };
 
 const enableForms = () => {
-  adForm.classList.remove('ad-form--disabled');
-  mapFilter.classList.remove('map__filters--disabled');
-
-  adFilterElement.forEach((element) => {
-    element.disabled = false;
-  });
+  enableAdForm();
+  enableMapFilter();
 };
-
-/*
-const disabledAdForm = () => {
-  adForm.classList.add('ad-form--disabled');
-
-  adFormElement.forEach((element) => {
-    element.disabled = true;
-  });
-};
-
-const disabledMapFilter = () => {
-  mapFilter.classList.add('map__filters--disabled');
-
-  mapFilterElement.forEach((element) => {
-    element.disabled = true;
-  });
-};
-
-const enabledAdForm = () => {
-  adForm.classList.remove('ad-form--disabled');
-
-  adFormElement.forEach((element) => {
-    element.disabled = false;
-  });
-};
-
-const enabledMapFilter = () => {
-  mapFilter.classList.remove('map__filters--disabled');
-
-  mapFilterElement.forEach((element) => {
-    element.disabled = false;
-  });
-};
-*/
 
 export {disableForms, enableForms};
