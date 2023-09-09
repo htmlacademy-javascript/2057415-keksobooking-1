@@ -72,7 +72,19 @@ const roomsToGuests = {
 
 const validateCapacity = () => roomsToGuests[adFormRoomNumber.value].includes(adFormCapacity.value);
 
-pristine.addValidator(adFormCapacity, validateCapacity, 'Недопустимое количество комнат');
+function getErrorMessage () {
+  if (adFormRoomNumber.value === '100') {
+    return '100 комнат не для гостей';
+  } if (adFormCapacity.value === '0') {
+    return `В ${adFormRoomNumber.value} ${adFormRoomNumber.value === '1' ? 'комнате' : 'комнатах'} должен кто-то проживать`;
+  } else {
+    return `В
+      ${adFormRoomNumber.value} ${adFormRoomNumber.value === '1' ? 'комнате' : 'комнатах'} нельзя разместить
+      ${adFormCapacity.value.toLowerCase()} гостей`;
+  }
+}
+
+pristine.addValidator(adFormCapacity, validateCapacity, getErrorMessage);
 
 //Время заезда и время выезда
 adFormTimeinAndTimeout.addEventListener('change', (evt) => {
