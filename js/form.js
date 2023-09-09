@@ -41,10 +41,8 @@ const validateTitleLength = (value) => value.length >= MIN_SYMBOLS_VALUE && valu
 pristine.addValidator(adFormTitle, validateTitleLength, `Введите от ${MIN_SYMBOLS_VALUE} до ${MAX_SYMBOLS_VALUE} символов`);
 
 //Цена за ночь
-const validatePriceIsLessThenZero = (value) => value >= 0;
-pristine.addValidator(adFormPrice, validatePriceIsLessThenZero, 'Недопустимое значение цены');
-const validatePriceMax = (value) => value <= MAX_PRICE;
-pristine.addValidator(adFormPrice, validatePriceMax, `Цена должна быть не более ${MAX_PRICE} руб.`);
+const validatePriceMax = (value) => value >= 0 && value <= MAX_PRICE;
+pristine.addValidator(adFormPrice, validatePriceMax, `Значение цены от 0 до ${MAX_PRICE} руб.`);
 
 const typeToMinPrice = {
   bungalow: 0,
