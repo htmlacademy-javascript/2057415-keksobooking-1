@@ -44,7 +44,7 @@ pristine.addValidator(adFormTitle, validateTitleLength, `Введите от ${M
 const validatePriceMax = (value) => value >= 0 && value <= MAX_PRICE;
 pristine.addValidator(adFormPrice, validatePriceMax, `Значение цены от 0 до ${MAX_PRICE} руб.`);
 
-const typeToMinPrice = {
+const TYPETOMINPRICE = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
@@ -53,13 +53,13 @@ const typeToMinPrice = {
 };
 
 const typeToPricePlaceholder = () => {
-  adFormPrice.placeholder = typeToMinPrice[adFormType.value];
+  adFormPrice.placeholder = TYPETOMINPRICE[adFormType.value];
   return true;
 };
 
 pristine.addValidator(adFormPrice, typeToPricePlaceholder, 'this');
 
-const validateTypeToMinPrice = (value) => value >= typeToMinPrice[adFormType.value];
+const validateTypeToMinPrice = (value) => value >= TYPETOMINPRICE[adFormType.value];
 
 pristine.addValidator(adFormPrice, validateTypeToMinPrice, 'Слишком маленькая цена');
 
@@ -100,3 +100,5 @@ adForm.addEventListener('submit', (evt) => {
     //'Можно отправлять';
   }
 });
+
+export {TYPETOMINPRICE, adFormType, adFormPrice};
