@@ -41,12 +41,10 @@ const validateTitleLength = (value) => value.length >= MIN_SYMBOLS_VALUE && valu
 pristine.addValidator(adFormTitle, validateTitleLength, `Введите от ${MIN_SYMBOLS_VALUE} до ${MAX_SYMBOLS_VALUE} символов`);
 
 //Цена за ночь
-const validatePriceIsLessThenZero = (value) => value >= 0;
-pristine.addValidator(adFormPrice, validatePriceIsLessThenZero, 'Недопустимое значение цены');
-const validatePriceMax = (value) => value <= MAX_PRICE;
-pristine.addValidator(adFormPrice, validatePriceMax, `Цена должна быть не более ${MAX_PRICE} руб.`);
+const validatePriceMax = (value) => value >= 0 && value <= MAX_PRICE;
+pristine.addValidator(adFormPrice, validatePriceMax, `Значение цены от 0 до ${MAX_PRICE} руб.`);
 
-const typeToMinPrice = {
+const TYPETOMINPRICE = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
@@ -55,13 +53,13 @@ const typeToMinPrice = {
 };
 
 const typeToPricePlaceholder = () => {
-  adFormPrice.placeholder = typeToMinPrice[adFormType.value];
+  adFormPrice.placeholder = TYPETOMINPRICE[adFormType.value];
   return true;
 };
 
 pristine.addValidator(adFormPrice, typeToPricePlaceholder, 'this');
 
-const validateTypeToMinPrice = (value) => value >= typeToMinPrice[adFormType.value];
+const validateTypeToMinPrice = (value) => value >= TYPETOMINPRICE[adFormType.value];
 
 pristine.addValidator(adFormPrice, validateTypeToMinPrice, 'Слишком маленькая цена');
 
@@ -74,7 +72,19 @@ const roomsToGuests = {
 
 const validateCapacity = () => roomsToGuests[adFormRoomNumber.value].includes(adFormCapacity.value);
 
-pristine.addValidator(adFormCapacity, validateCapacity, 'Недопустимое количество комнат');
+function getErrorMessage () {
+  if (adFormRoomNumber.value === '100') {
+    return '100 комнат не для гостей';
+  } if (adFormCapacity.value === '0') {
+    return `В ${adFormRoomNumber.value} ${adFormRoomNumber.value === '1' ? 'комнате' : 'комнатах'} должен кто-то проживать`;
+  } else {
+    return `В
+      ${adFormRoomNumber.value} ${adFormRoomNumber.value === '1' ? 'комнате' : 'комнатах'} нельзя разместить
+      ${adFormCapacity.value.toLowerCase()} гостей`;
+  }
+}
+
+pristine.addValidator(adFormCapacity, validateCapacity, getErrorMessage);
 
 //Время заезда и время выезда
 adFormTimeinAndTimeout.addEventListener('change', (evt) => {
@@ -90,3 +100,5 @@ adForm.addEventListener('submit', (evt) => {
     //'Можно отправлять';
   }
 });
+
+export {TYPETOMINPRICE, adFormType, adFormPrice};
