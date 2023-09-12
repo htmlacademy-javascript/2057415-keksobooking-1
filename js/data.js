@@ -23,13 +23,13 @@ const createData = (_, index) => {
   const location = { lat: calculationLat(), lng: calculationLng() };
   return {
     author: {
-      avatar: `img/avatars/user${formatNumber(index)}.png`
+      avatar: `img/avatars/user${formatNumber(index + 1)}.png`
     },
     offer: {
       title: OFFER_TITLES[getRandomNumber(0, OFFER_TITLES.length - 1)],
       address: `${location.lat}, ${location.lng}`,
       price: getRandomNumber(1, 50000),
-      type: TYPE_HOUSES[getRandomNumber(0, TYPE_HOUSES.length - 1)],
+      type: TYPE_HOUSES[getRandomNumber(0, TYPE_HOUSES.length)],
       rooms: getRandomNumber(1, 5),
       guests: getRandomNumber(1, 9),
       checkin: CHECK_IN[getRandomNumber(0, CHECK_IN.length - 1)],
