@@ -1,8 +1,13 @@
 import {generateCard, offers} from './card.js';
+import {enableForms} from './disabler-form.js';
 // Настройка карты leaflet
 const ROUND_COORDINATE = 5;
 // Создание карты
 const map = L.map('map-canvas')
+  .on('load', () => {
+    //console.log('Карта инициализирована');
+    enableForms();
+  })
   .setView({
     lat: 35.6895,
     lng: 139.692,
