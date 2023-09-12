@@ -1,4 +1,4 @@
-import {generateCard} from './card.js';
+import {generateCard, offers} from './card.js';
 // Настройка карты leaflet
 const ROUND_COORDINATE = 5;
 // Создание карты
@@ -6,7 +6,7 @@ const map = L.map('map-canvas')
   .setView({
     lat: 35.6895,
     lng: 139.692,
-  }, 10);
+  }, 12);
 
 
 // Отрисовка карты OpenStreetMap
@@ -99,5 +99,7 @@ function createMarker(points) {
       .bindPopup(generateCard(point));
   });
 }
+
+createMarker(offers);
 
 export {createMarker};

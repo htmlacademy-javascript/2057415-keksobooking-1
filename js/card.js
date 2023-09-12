@@ -66,4 +66,4 @@ const offers = getRandomMeHouseDreamArray;
 
 generateCard(offers[getRandomNumber(0, offers.length - 1)]);
 
-export {generateCard};
+export {generateCard, offers};
