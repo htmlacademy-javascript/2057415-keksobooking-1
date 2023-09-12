@@ -60,6 +60,7 @@ const generateCard = ({ author, offer }) => {
   cardElement.querySelector('.popup__avatar').src = author.avatar;
   const parentElement = document.querySelector('#map-canvas');
   parentElement.appendChild(cardElement);
+  return cardElement;
 };
 
 const offers = getRandomMeHouseDreamArray;
