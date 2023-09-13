@@ -1,35 +1,46 @@
-import {generateCard} from './card.js';
+import {generateCard, offers} from './card.js';
+import {enableForms} from './disabler-form.js';
+const ICONSIZE = [52, 52];
+const LATITUDE = 35.6895;
+const LONGITUDE = 139.692;
+const OPENSTREETMAP = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const COPYRIGHTOPENSTREETMAP = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const MAP = L.map('map-canvas');
 // Настройка карты leaflet
 const ROUND_COORDINATE = 5;
 // Создание карты
-const map = L.map('map-canvas')
-  .setView({
-    lat: 35.6895,
-    lng: 139.692,
-  }, 10);
-
+const initializationMapStreet = () => {
+  MAP.on('load', () => {
+  //console.log('Карта инициализирована');
+    enableForms();
+  });
+  MAP.setView({
+    lat: LATITUDE,
+    lng: LONGITUDE,
+  }, 12);
+};
 
 // Отрисовка карты OpenStreetMap
 L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  OPENSTREETMAP,
   {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    attribution: COPYRIGHTOPENSTREETMAP,
   },
-).addTo(map);
+).addTo(MAP);
 
 // Отрисовка главной метки выбора адреса
 function createMainMarker (checkValidation) {
   const mainPinIcon = L.icon({
     iconUrl: './img/main-pin.svg',
-    iconSize: [52, 52],
+    iconSize: ICONSIZE,
     iconAnchor: [26, 52],
   });
 
 
   const mainPinMarker = L.marker(
     {
-      lat: 35.6895,
-      lng: 139.692,
+      lat: LATITUDE,
+      lng: LONGITUDE,
     },
     {
       draggable: true,
@@ -37,7 +48,7 @@ function createMainMarker (checkValidation) {
     },
   );
 
-  mainPinMarker.addTo(map);
+  mainPinMarker.addTo(MAP);
 
   // Фиксирование координат главной метки и передача в поле адреса
   const address = document.querySelector('#address');
@@ -60,20 +71,20 @@ function createMainMarker (checkValidation) {
   // Вернуть масштаб и положение метки
   resetButton.addEventListener('click', () => {
     mainPinMarker.setLatLng({
-      lat: 35.6895,
-      lng: 139.692,
+      lat: LATITUDE,
+      lng: LONGITUDE,
     });
 
-    map.setView({
-      lat: 35.6895,
-      lng: 139.692,
+    MAP.setView({
+      lat: LATITUDE,
+      lng: LONGITUDE,
     }, 10);
   });
 }
 createMainMarker ();
 
 // Отрисовка предложений
-const markerGroup = L.layerGroup().addTo(map); // слой для меток
+const markerGroup = L.layerGroup().addTo(MAP); // слой для меток
 
 const pinIcon = L.icon({
   iconUrl: './img/pin.svg',
@@ -99,5 +110,9 @@ function createMarker(points) {
       .bindPopup(generateCard(point));
   });
 }
+
+initializationMapStreet();
+
+createMarker(offers);
 
 export {createMarker};

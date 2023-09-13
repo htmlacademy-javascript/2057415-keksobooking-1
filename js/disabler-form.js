@@ -45,4 +45,6 @@ const enableForms = () => {
   enableMapFilter();
 };
 
+disableForms();
+
 export {disableForms, enableForms};

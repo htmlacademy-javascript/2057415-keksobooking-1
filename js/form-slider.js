@@ -78,4 +78,6 @@ function createSlider() {
   });
 }
 
+createSlider();
+
 export {createSlider};
