@@ -13,9 +13,11 @@ function getData (onSuccess) {
         showAlert('Не удалось загрузить данные. Попробуйте ещё раз');
       }
     })
-    .then(onSuccess)
+    .then((offers) => {
+      onSuccess(offers);
+    })
     .catch(() => {
-      new Error('Data not correct');
+      throw new Error('Data not correct');
     });
 }
 
@@ -34,7 +36,7 @@ function sendData (onSuccess, formData) {
     })
     .then (onSuccess)
     .catch(() => {
-      new Error('Server is not responding');
+      throw new Error('Server is not responding');
     });
 }
 

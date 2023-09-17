@@ -7,15 +7,15 @@ const errorMessage = errorTemplate.querySelector('.success');
 
 function showAlert (message) {
   const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = '100';
+  alertContainer.style.zIndex = '1000';
   alertContainer.style.position = 'absolute';
-  alertContainer.style.left = '30%';
+  alertContainer.style.left = '10%';
   alertContainer.style.top = '50%';
-  alertContainer.style.right = '30%';
+  alertContainer.style.right = '10%';
   alertContainer.style.padding = '30px 3px';
   alertContainer.style.fontSize = '30px';
   alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'red';
+  alertContainer.style.backgroundColor = '#ffb8c6';
 
   alertContainer.textContent = message;
 
