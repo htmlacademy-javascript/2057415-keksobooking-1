@@ -23,7 +23,7 @@ const createData = (_, index) => {
   const location = { lat: calculationLat(), lng: calculationLng() };
   return {
     author: {
-      avatar: `img/avatars/user${formatNumber(index)}.png`
+      avatar: `img/avatars/user${formatNumber(index + 1)}.png`
     },
     offer: {
       title: OFFER_TITLES[getRandomNumber(0, OFFER_TITLES.length - 1)],
