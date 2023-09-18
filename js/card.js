@@ -1,5 +1,5 @@
-import { getRandomMeHouseDreamArray } from './data.js';
-import { getRandomNumber } from './utils.js';
+//import { getRandomMeHouseDreamArray } from './data.js';
+//import { getRandomNumber } from './utils.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
@@ -33,7 +33,7 @@ const generateCard = ({ author, offer }) => {
   for (let i = 0; i < featuresLength; i++) {
     popupFeaturesList.removeChild(cardElement.querySelector('.popup__feature'));
   }
-  if (offer.features.length === 0) {
+  if (!offer.features?.length) {
     popupFeaturesList.classList.add('visually-hidden');
   } else {
     for (let i = 0; i < offer.features.length; i++) {
@@ -48,7 +48,7 @@ const generateCard = ({ author, offer }) => {
     popupDescription.classList.add('visually-hidden');
   }
   cardElement.querySelector('.popup__photos').removeChild(userPhoto);
-  if (offer.photos.length !== 0) {
+  if (offer.photos?.length) {
     for (let i = 0; i < offer.photos.length; i++) {
       const userPhotoCloned = userPhoto.cloneNode(true);
       userPhotoCloned.src = offer.photos[i];
@@ -63,8 +63,8 @@ const generateCard = ({ author, offer }) => {
   return cardElement;
 };
 
-const offers = getRandomMeHouseDreamArray;
+//const offers = getRandomMeHouseDreamArray;
 
-generateCard(offers[getRandomNumber(0, offers.length - 1)]);
+//generateCard(offers[getRandomNumber(0, offers.length - 1)]);
 
-export {generateCard, offers};
+export {generateCard};

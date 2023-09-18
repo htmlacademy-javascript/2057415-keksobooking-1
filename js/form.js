@@ -1,3 +1,7 @@
+import {sendData} from './api.js';
+import {getSuccessErrorMessage} from './success-error-message.js';
+//import {sliderElement} from './form-slider.js';
+
 const adForm = document.querySelector('.ad-form');
 const MIN_SYMBOLS_VALUE = 30;
 const MAX_SYMBOLS_VALUE = 100;
@@ -20,6 +24,9 @@ const adFormPrice = adForm.querySelector('#price');
 const adFormTimeIn = adForm.querySelector('#timein');
 const adFormTimeOut = adForm.querySelector('#timeout');
 const adFormTimeinAndTimeout = adForm.querySelector('.ad-form__element--time');
+const adFormSubmit = adForm.querySelector('.ad-form__submit');
+//const adFormReset = document.querySelector('.ad-form__reset');
+const {getSuccessMessage, getErrorMessage} = getSuccessErrorMessage();
 
 const onTypeChange = () => {
   pristine.validate(adFormPrice);
@@ -72,7 +79,7 @@ const roomsToGuests = {
 
 const validateCapacity = () => roomsToGuests[adFormRoomNumber.value].includes(adFormCapacity.value);
 
-function getErrorMessage () {
+function getFaultMessage () {
   if (adFormRoomNumber.value === '100') {
     return '100 комнат не для гостей';
   } if (adFormCapacity.value === '0') {
@@ -84,7 +91,7 @@ function getErrorMessage () {
   }
 }
 
-pristine.addValidator(adFormCapacity, validateCapacity, getErrorMessage);
+pristine.addValidator(adFormCapacity, validateCapacity, getFaultMessage);
 
 //Время заезда и время выезда
 adFormTimeinAndTimeout.addEventListener('change', (evt) => {
@@ -93,12 +100,42 @@ adFormTimeinAndTimeout.addEventListener('change', (evt) => {
   }
 });
 
-adForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    //'Можно отправлять';
-  }
-});
+//Отправка данных
+function setUserFormSubmit () {
+
+  const blockSubmitButton = () => {
+    adFormSubmit.disabled = true;
+    adFormSubmit.textContent = 'Публикую...';
+  };
+
+  const unblockSubmitButton = () => {
+    adFormSubmit.disabled = false;
+    adFormSubmit.textContent = 'Опубликовать';
+  };
+
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton ();
+
+      const formData = new FormData(evt.target);
+
+      sendData(formData).then((data) => {
+        if (data) {
+          getSuccessMessage ();
+          adForm.reset();
+        } else {
+          getErrorMessage ();
+        }
+      })
+        .finally(() => {
+          unblockSubmitButton ();
+        });
+    }
+  });
+}
+
+setUserFormSubmit ();
 
 export {TYPETOMINPRICE, adFormType, adFormPrice};

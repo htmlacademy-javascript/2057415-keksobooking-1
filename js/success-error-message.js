@@ -27,10 +27,10 @@ function showAlert (message) {
 }
 
 function getSuccessErrorMessage() {
+
   function isEscapeKey (evt) {
     return evt.key === 'Escape';
   }
-
 
   function onSuccessMessageEscKeydown (evt) {
     if (isEscapeKey(evt)) {

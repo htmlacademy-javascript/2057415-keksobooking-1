@@ -4,7 +4,7 @@ const GET_DATA_URL = 'https://28.javascript.pages.academy/keksobooking/data';
 const SEND_DATA_URL = 'https://28.javascript.pages.academy/keksobooking';
 const POST = 'POST';
 
-function getData (onSuccess) {
+function getData(onSuccess) {
   fetch(GET_DATA_URL)
     .then((response) => {
       if (response.ok) {
@@ -21,7 +21,7 @@ function getData (onSuccess) {
     });
 }
 
-function sendData (onSuccess, formData) {
+function sendData(onSuccess, formData) {
   fetch(SEND_DATA_URL,
     {
       method: POST,
@@ -39,5 +39,7 @@ function sendData (onSuccess, formData) {
       throw new Error('Server is not responding');
     });
 }
+
+getData();
 
 export {getData, sendData};
