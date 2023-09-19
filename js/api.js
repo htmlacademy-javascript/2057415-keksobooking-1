@@ -34,7 +34,9 @@ function sendData(onSuccess, formData) {
       }
       showAlert('Не удалось отправить форму. Попробуйте ещё раз');
     })
-    .then (onSuccess)
+    .then((data) => {
+      onSuccess(data);
+    })
     .catch(() => {
       throw new Error('Server is not responding');
     });

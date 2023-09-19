@@ -113,6 +113,12 @@ function setUserFormSubmit () {
     adFormSubmit.textContent = 'Опубликовать';
   };
 
+  const onSuccess = () => {
+    adForm.reset();
+    getSuccessMessage ();
+    unblockSubmitButton();
+  };
+
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
@@ -121,21 +127,13 @@ function setUserFormSubmit () {
 
       const formData = new FormData(evt.target);
 
-      sendData(formData).then((data) => {
-        if (data) {
-          getSuccessMessage ();
-          adForm.reset();
-        } else {
-          getErrorMessage ();
-        }
-      })
-        .finally(() => {
-          unblockSubmitButton ();
-        });
+      sendData(onSuccess, formData);
+    } else {
+      getErrorMessage ();
     }
   });
 }
 
-setUserFormSubmit ();
+setUserFormSubmit();
 
-export {TYPETOMINPRICE, adFormType, adFormPrice};
+export {TYPETOMINPRICE, adFormType, adFormPrice, setUserFormSubmit};
