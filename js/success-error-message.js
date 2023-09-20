@@ -3,7 +3,7 @@ const ALERT_SHOW_TIME = 5000;
 const successTemplate = document.querySelector('#success').content;
 const successMessage = successTemplate.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content;
-const errorMessage = errorTemplate.querySelector('.success');
+const errorMessage = errorTemplate.querySelector('.error');
 
 function showAlert (message) {
   const alertContainer = document.createElement('div');

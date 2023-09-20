@@ -21,7 +21,7 @@ function getData(onSuccess) {
     });
 }
 
-function sendData(onSuccess, formData) {
+function sendData(formData, onSuccess, onError) {
   fetch(SEND_DATA_URL,
     {
       method: POST,
@@ -32,16 +32,20 @@ function sendData(onSuccess, formData) {
       if (response.ok) {
         return response.json();
       }
-      showAlert('Не удалось отправить форму. Попробуйте ещё раз');
+      throw new Error('Server is not responding');
     })
     .then((data) => {
-      onSuccess(data);
+      if (onSuccess) {
+        onSuccess(data);
+      }
     })
     .catch(() => {
+      if (onError) {
+        onError();
+        return;
+      }
       throw new Error('Server is not responding');
     });
 }
-
-getData();
 
 export {getData, sendData};

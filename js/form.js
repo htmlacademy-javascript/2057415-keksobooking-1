@@ -101,39 +101,37 @@ adFormTimeinAndTimeout.addEventListener('change', (evt) => {
 });
 
 //Отправка данных
-function setUserFormSubmit () {
+const blockSubmitButton = () => {
+  adFormSubmit.disabled = true;
+  adFormSubmit.textContent = 'Публикую...';
+};
 
-  const blockSubmitButton = () => {
-    adFormSubmit.disabled = true;
-    adFormSubmit.textContent = 'Публикую...';
-  };
+const unblockSubmitButton = () => {
+  adFormSubmit.disabled = false;
+  adFormSubmit.textContent = 'Опубликовать';
+};
 
-  const unblockSubmitButton = () => {
-    adFormSubmit.disabled = false;
-    adFormSubmit.textContent = 'Опубликовать';
-  };
+const onSuccess = () => {
+  adForm.reset();
+  getSuccessMessage ();
+  unblockSubmitButton();
+};
 
-  const onSuccess = () => {
-    adForm.reset();
-    getSuccessMessage ();
-    unblockSubmitButton();
-  };
+const onError = () => {
+  getErrorMessage();
+  unblockSubmitButton();
+};
 
-  adForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    const isValid = pristine.validate();
-    if (isValid) {
-      blockSubmitButton ();
+adForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+  if (isValid) {
+    blockSubmitButton ();
+    const formData = new FormData(evt.target);
+    sendData(formData, onSuccess, onError);
+  } else {
+    getErrorMessage ();
+  }
+});
 
-      const formData = new FormData(evt.target);
-
-      sendData(onSuccess, formData);
-    } else {
-      getErrorMessage ();
-    }
-  });
-}
-
-setUserFormSubmit();
-
-export {TYPETOMINPRICE, adFormType, adFormPrice, setUserFormSubmit};
+export {TYPETOMINPRICE, adFormType, adFormPrice};
