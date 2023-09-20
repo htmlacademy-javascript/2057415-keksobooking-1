@@ -26,44 +26,42 @@ function showAlert (message) {
   }, ALERT_SHOW_TIME);
 }
 
-function getSuccessErrorMessage() {
+const getSuccessErrorMessage = () => {
 
-  function isEscapeKey (evt) {
-    return evt.key === 'Escape';
-  }
+  const isEscapeKey = (evt) => evt.key === 'Escape';
 
-  function onSuccessMessageEscKeydown (evt) {
+  const onSuccessMessageEscKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       successMessage.remove();
     }
-  }
+  };
 
-  function onErrorMessageEscKeydown (evt) {
+  const onErrorMessageEscKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       errorMessage.remove();
     }
-  }
+  };
 
-  function getSuccessMessage () {
+  const getSuccessMessage = () => {
     document.body.append(successMessage);
     document.addEventListener('keydown', onSuccessMessageEscKeydown);
     document.addEventListener('click', () => {
       successMessage.remove();
     });
-  }
+  };
 
-  function getErrorMessage () {
+  const getErrorMessage = () => {
     document.body.append(errorMessage);
     document.addEventListener('keydown', onErrorMessageEscKeydown);
     document.addEventListener('click', () => {
       errorMessage.remove();
     });
-  }
+  };
 
   return {getSuccessMessage, getErrorMessage};
-}
+};
 
 showAlert();
 getSuccessErrorMessage();
