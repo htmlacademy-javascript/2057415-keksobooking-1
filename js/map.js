@@ -1,10 +1,12 @@
-import {generateCard, offers} from './card.js';
+import {generateCard} from './card.js';
 import {enableForms} from './disabler-form.js';
+import {getData} from './api.js';
+
 const ICONSIZE = [52, 52];
-const LATITUDE = 35.6895;
-const LONGITUDE = 139.692;
-const OPENSTREETMAP = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-const COPYRIGHTOPENSTREETMAP = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const DEFAULT_LATITUDE = 35.6895;
+const DEFAULT_LONGITUDE = 139.692;
+const DEFAULT_TILE = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const COPY_RIGHT_OPENSTREETMAP = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const MAP = L.map('map-canvas');
 // Настройка карты leaflet
 const ROUND_COORDINATE = 5;
@@ -15,16 +17,16 @@ const initializationMapStreet = () => {
     enableForms();
   });
   MAP.setView({
-    lat: LATITUDE,
-    lng: LONGITUDE,
+    lat: DEFAULT_LATITUDE,
+    lng: DEFAULT_LONGITUDE,
   }, 12);
 };
 
 // Отрисовка карты OpenStreetMap
 L.tileLayer(
-  OPENSTREETMAP,
+  DEFAULT_TILE,
   {
-    attribution: COPYRIGHTOPENSTREETMAP,
+    attribution: COPY_RIGHT_OPENSTREETMAP,
   },
 ).addTo(MAP);
 
@@ -39,8 +41,8 @@ function createMainMarker (checkValidation) {
 
   const mainPinMarker = L.marker(
     {
-      lat: LATITUDE,
-      lng: LONGITUDE,
+      lat: DEFAULT_LATITUDE,
+      lng: DEFAULT_LONGITUDE,
     },
     {
       draggable: true,
@@ -71,13 +73,13 @@ function createMainMarker (checkValidation) {
   // Вернуть масштаб и положение метки
   resetButton.addEventListener('click', () => {
     mainPinMarker.setLatLng({
-      lat: LATITUDE,
-      lng: LONGITUDE,
+      lat: DEFAULT_LATITUDE,
+      lng: DEFAULT_LONGITUDE,
     });
 
     MAP.setView({
-      lat: LATITUDE,
-      lng: LONGITUDE,
+      lat: DEFAULT_LATITUDE,
+      lng: DEFAULT_LONGITUDE,
     }, 10);
   });
 }
@@ -113,6 +115,7 @@ function createMarker(points) {
 
 initializationMapStreet();
 
-createMarker(offers);
+getData(createMarker);
+//createMarker(offers);
 
 export {createMarker};
