@@ -118,4 +118,4 @@ initializationMapStreet();
 getData(createMarker);
 //createMarker(offers);
 
-export {createMarker};
+export {createMarker, markerGroup};

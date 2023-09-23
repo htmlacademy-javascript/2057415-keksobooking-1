@@ -1,5 +1,6 @@
 import {sendData} from './api.js';
 import {getSuccessErrorMessage} from './success-error-message.js';
+import {resetPreviews} from './upload-images';
 //import {sliderElement} from './form-slider.js';
 
 const adForm = document.querySelector('.ad-form');
@@ -115,6 +116,7 @@ const onSuccess = () => {
   adForm.reset();
   getSuccessMessage ();
   unblockSubmitButton();
+  resetPreviews();
 };
 
 const onError = () => {
