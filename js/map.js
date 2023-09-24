@@ -1,6 +1,6 @@
 import {generateCard} from './card.js';
 import {enableForms} from './disabler-form.js';
-import {getData} from './api.js';
+//import {getData} from './api.js';
 
 const ICONSIZE = [52, 52];
 const DEFAULT_LATITUDE = 35.6895;
@@ -115,7 +115,4 @@ function createMarker(points) {
 
 initializationMapStreet();
 
-getData(createMarker);
-//createMarker(offers);
-
-export {createMarker};
+export {createMarker, markerGroup};
