@@ -58,13 +58,8 @@ const generateCard = ({ author, offer }) => {
     userPhotoList.classList.add('visually-hidden');
   }
   cardElement.querySelector('.popup__avatar').src = author.avatar;
-  const parentElement = document.querySelector('#map-canvas');
-  parentElement.appendChild(cardElement);
+
   return cardElement;
 };
-
-//const offers = getRandomMeHouseDreamArray;
-
-//generateCard(offers[getRandomNumber(0, offers.length - 1)]);
 
 export {generateCard};

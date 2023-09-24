@@ -1,11 +1,12 @@
-import {markerGroup} from './map.js';
-import {generateCard} from './card.js';
+import {markerGroup, createMarker} from './map.js';
 import {debounce} from './debounce.js';
 
 const FILTER_PRICE_VALUES = {
   low: 10000,
   high: 50000
 };
+
+const OFFER_COUNT = 10;
 
 const DEBOUNCE_TIMEOUT_DELAY = 500;
 const mapFiltersElement = document.querySelector('.map__filters');
@@ -71,16 +72,17 @@ const filterSimilarOffersNear = (offers) => {
       filteredOffers.push(offer);
     }
   }
-  return filteredOffers;
+  return filteredOffers.slice(0, OFFER_COUNT);
 };
 
 const mapFilterHandler = (offers) => {
   markerGroup.clearLayers();
-  generateCard(filterSimilarOffersNear(offers));
+  //return filterSimilarOffersNear(offers);
+  createMarker(filterSimilarOffersNear(offers));
 };
 
 const setFilterOffersContent = (offers) => {
   mapFiltersElement.addEventListener('change', debounce(() => mapFilterHandler(offers), DEBOUNCE_TIMEOUT_DELAY));
 };
 
-export {setFilterOffersContent};
+export {setFilterOffersContent, filterSimilarOffersNear};
