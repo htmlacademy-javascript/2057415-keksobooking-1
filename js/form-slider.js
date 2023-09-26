@@ -3,7 +3,7 @@ import {TYPETOMINPRICE, adFormType, adFormPrice} from './form.js';
 
 const sliderElement = document.querySelector('.ad-form__slider');
 
-function createSlider() {
+const createSlider = () => {
 
   noUiSlider.create(sliderElement, {
     range: {
@@ -76,8 +76,14 @@ function createSlider() {
       });
     }
   });
-}
+};
+
+const resetSliderValue = () => {
+  sliderElement.addEventListener ('click', () => {
+    sliderElement.noUiSlider.reset();
+  });
+};
 
 createSlider();
 
-export {createSlider};
+export {createSlider, resetSliderValue};

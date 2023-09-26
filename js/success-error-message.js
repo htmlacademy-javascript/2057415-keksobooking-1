@@ -63,7 +63,4 @@ const getSuccessErrorMessage = () => {
   return {getSuccessMessage, getErrorMessage};
 };
 
-showAlert();
-getSuccessErrorMessage();
-
 export {showAlert, getSuccessErrorMessage};

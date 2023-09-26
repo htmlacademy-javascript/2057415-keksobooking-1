@@ -77,7 +77,6 @@ const filterSimilarOffersNear = (offers) => {
 
 const mapFilterHandler = (offers) => {
   markerGroup.clearLayers();
-  //return filterSimilarOffersNear(offers);
   createMarker(filterSimilarOffersNear(offers));
 };
 

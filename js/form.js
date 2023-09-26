@@ -1,6 +1,7 @@
 import {sendData} from './api.js';
 import {getSuccessErrorMessage} from './success-error-message.js';
 import {resetPreviews} from './upload-images.js';
+import {MAP} from './map.js';
 
 const adForm = document.querySelector('.ad-form');
 const MIN_SYMBOLS_VALUE = 30;
@@ -79,7 +80,7 @@ const roomsToGuests = {
 
 const validateCapacity = () => roomsToGuests[adFormRoomNumber.value].includes(adFormCapacity.value);
 
-function getFaultMessage () {
+const getFaultMessage = () => {
   if (adFormRoomNumber.value === '100') {
     return '100 комнат не для гостей';
   } if (adFormCapacity.value === '0') {
@@ -89,7 +90,7 @@ function getFaultMessage () {
       ${adFormRoomNumber.value} ${adFormRoomNumber.value === '1' ? 'комнате' : 'комнатах'} нельзя разместить
       ${adFormCapacity.value.toLowerCase()} гостей`;
   }
-}
+};
 
 pristine.addValidator(adFormCapacity, validateCapacity, getFaultMessage);
 
@@ -116,6 +117,7 @@ const onSuccess = () => {
   getSuccessMessage ();
   unblockSubmitButton();
   resetPreviews();
+  MAP.closePopup();
 };
 
 const onError = () => {

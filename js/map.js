@@ -1,6 +1,6 @@
 import {generateCard} from './card.js';
 import {enableForms} from './disabler-form.js';
-//import {getData} from './api.js';
+import {resetButton, address} from './const.js';
 
 const ICONSIZE = [52, 52];
 const DEFAULT_LATITUDE = 35.6895;
@@ -31,7 +31,7 @@ L.tileLayer(
 ).addTo(MAP);
 
 // Отрисовка главной метки выбора адреса
-function createMainMarker (checkValidation) {
+const createMainMarker = (checkValidation) => {
   const mainPinIcon = L.icon({
     iconUrl: './img/main-pin.svg',
     iconSize: ICONSIZE,
@@ -53,18 +53,15 @@ function createMainMarker (checkValidation) {
   mainPinMarker.addTo(MAP);
 
   // Фиксирование координат главной метки и передача в поле адреса
-  const address = document.querySelector('#address');
 
-  function getAddressCoordinates (coordinates) {
+  const getAddressCoordinates = (coordinates) => {
     address.value = `lat: ${(coordinates.lat).toFixed(ROUND_COORDINATE)}, lng: ${(coordinates.lng).toFixed(ROUND_COORDINATE)}`;
-  }
+  };
 
   mainPinMarker.on('moveend', (evt) => {
     const point = evt.target.getLatLng();
     getAddressCoordinates (point);
   });
-
-  const resetButton = document.querySelector('.ad-form__reset');
 
   mainPinMarker.on('change', () => {
     checkValidation(address);
@@ -81,8 +78,11 @@ function createMainMarker (checkValidation) {
       lat: DEFAULT_LATITUDE,
       lng: DEFAULT_LONGITUDE,
     }, 10);
+
+    MAP.closePopup();
   });
-}
+};
+
 createMainMarker ();
 
 // Отрисовка предложений
@@ -94,7 +94,7 @@ const pinIcon = L.icon({
   iconAnchor: [20, 40],
 });
 
-function createMarker(points) {
+const createMarker = (points) => {
   points.forEach((point) => {
     const {location: {lat, lng}} = point;
     const marker = L.marker(
@@ -111,8 +111,8 @@ function createMarker(points) {
       .addTo(markerGroup)
       .bindPopup(generateCard(point));
   });
-}
+};
 
 initializationMapStreet();
 
-export {createMarker, markerGroup};
+export {createMarker, markerGroup, MAP};

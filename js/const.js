@@ -10,6 +10,8 @@ const SPECIFICATIONS = ['Хорошая квартира', 'Квартира в 
 const REAL_ESTATE_PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
+const resetButton = document.querySelector('.ad-form__reset');
+const address = document.querySelector('#address');
 
 export {
   ARRAY_COUNT,
@@ -19,5 +21,7 @@ export {
   TYPE_HOUSES,
   ADD_CHIPS,
   SPECIFICATIONS,
-  REAL_ESTATE_PHOTOS
+  REAL_ESTATE_PHOTOS,
+  resetButton,
+  address
 };

@@ -5,7 +5,6 @@ import {
 } from './utils.js';
 
 import {
-  ARRAY_COUNT,
   CHECK_IN,
   CHECK_OUT,
   OFFER_TITLES,
@@ -42,9 +41,4 @@ const createData = (_, index) => {
   };
 };
 
-const getRandomMeHouseDreamArray = Array.from({length: ARRAY_COUNT}, createData);
-
-export {
-  getRandomMeHouseDreamArray,
-  createData
-};
+export {createData};
