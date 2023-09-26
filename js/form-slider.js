@@ -1,5 +1,6 @@
 // Настройка слайдера
 import {TYPETOMINPRICE, adFormType, adFormPrice} from './form.js';
+import {resetButton} from './const.js';
 
 const sliderElement = document.querySelector('.ad-form__slider');
 
@@ -79,7 +80,7 @@ const createSlider = () => {
 };
 
 const resetSliderValue = () => {
-  sliderElement.addEventListener ('click', () => {
+  resetButton.addEventListener ('click', () => {
     sliderElement.noUiSlider.reset();
   });
 };
