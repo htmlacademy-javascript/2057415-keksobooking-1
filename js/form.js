@@ -1,7 +1,7 @@
 import {sendData} from './api.js';
 import {getSuccessErrorMessage} from './success-error-message.js';
 import {resetPreviews} from './upload-images.js';
-import {MAP} from './map.js';
+import {resetMap, MAP} from './map.js';
 
 const adForm = document.querySelector('.ad-form');
 const MIN_SYMBOLS_VALUE = 30;
@@ -52,7 +52,7 @@ pristine.addValidator(adFormTitle, validateTitleLength, `Введите от ${M
 const validatePriceMax = (value) => value >= 0 && value <= MAX_PRICE;
 pristine.addValidator(adFormPrice, validatePriceMax, `Значение цены от 0 до ${MAX_PRICE} руб.`);
 
-const TYPETOMINPRICE = {
+const TYPE_TO_MIN_PRICE = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
@@ -61,13 +61,13 @@ const TYPETOMINPRICE = {
 };
 
 const typeToPricePlaceholder = () => {
-  adFormPrice.placeholder = TYPETOMINPRICE[adFormType.value];
+  adFormPrice.placeholder = TYPE_TO_MIN_PRICE[adFormType.value];
   return true;
 };
 
 pristine.addValidator(adFormPrice, typeToPricePlaceholder, 'this');
 
-const validateTypeToMinPrice = (value) => value >= TYPETOMINPRICE[adFormType.value];
+const validateTypeToMinPrice = (value) => value >= TYPE_TO_MIN_PRICE[adFormType.value];
 
 pristine.addValidator(adFormPrice, validateTypeToMinPrice, 'Слишком маленькая цена');
 
@@ -117,6 +117,7 @@ const onSuccess = () => {
   getSuccessMessage ();
   unblockSubmitButton();
   resetPreviews();
+  resetMap();
   MAP.closePopup();
 };
 
@@ -137,4 +138,4 @@ adForm.addEventListener('submit', (evt) => {
   }
 });
 
-export {TYPETOMINPRICE, adFormType, adFormPrice};
+export {TYPE_TO_MIN_PRICE, adFormType, adFormPrice};

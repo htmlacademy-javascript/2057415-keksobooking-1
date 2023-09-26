@@ -30,32 +30,46 @@ L.tileLayer(
   },
 ).addTo(MAP);
 
-// Отрисовка главной метки выбора адреса
-const createMainMarker = (checkValidation) => {
-  const mainPinIcon = L.icon({
-    iconUrl: './img/main-pin.svg',
-    iconSize: ICONSIZE,
-    iconAnchor: [26, 52],
+const mainPinIcon = L.icon({
+  iconUrl: './img/main-pin.svg',
+  iconSize: ICONSIZE,
+  iconAnchor: [26, 52],
+});
+
+const mainPinMarker = L.marker(
+  {
+    lat: DEFAULT_LATITUDE,
+    lng: DEFAULT_LONGITUDE,
+  },
+  {
+    draggable: true,
+    icon: mainPinIcon,
+  },
+);
+//Сброс настроек карты до начальных значений
+const resetMap = () => {
+  mainPinMarker.setLatLng({
+    lat: DEFAULT_LATITUDE,
+    lng: DEFAULT_LONGITUDE,
   });
 
+  MAP.setView({
+    lat: DEFAULT_LATITUDE,
+    lng: DEFAULT_LONGITUDE,
+  }, 12);
 
-  const mainPinMarker = L.marker(
-    {
-      lat: DEFAULT_LATITUDE,
-      lng: DEFAULT_LONGITUDE,
-    },
-    {
-      draggable: true,
-      icon: mainPinIcon,
-    },
-  );
+  MAP.closePopup();
+};
+
+// Отрисовка главной метки выбора адреса
+const createMainMarker = (checkValidation) => {
 
   mainPinMarker.addTo(MAP);
 
   // Фиксирование координат главной метки и передача в поле адреса
 
   const getAddressCoordinates = (coordinates) => {
-    address.value = `lat: ${(coordinates.lat).toFixed(ROUND_COORDINATE)}, lng: ${(coordinates.lng).toFixed(ROUND_COORDINATE)}`;
+    address.value = `${(coordinates.lat).toFixed(ROUND_COORDINATE)}, ${(coordinates.lng).toFixed(ROUND_COORDINATE)}`;
   };
 
   mainPinMarker.on('moveend', (evt) => {
@@ -68,19 +82,7 @@ const createMainMarker = (checkValidation) => {
   });
 
   // Вернуть масштаб и положение метки
-  resetButton.addEventListener('click', () => {
-    mainPinMarker.setLatLng({
-      lat: DEFAULT_LATITUDE,
-      lng: DEFAULT_LONGITUDE,
-    });
-
-    MAP.setView({
-      lat: DEFAULT_LATITUDE,
-      lng: DEFAULT_LONGITUDE,
-    }, 10);
-
-    MAP.closePopup();
-  });
+  resetButton.addEventListener('click', resetMap);
 };
 
 createMainMarker ();
@@ -115,4 +117,4 @@ const createMarker = (points) => {
 
 initializationMapStreet();
 
-export {createMarker, markerGroup, MAP};
+export {createMarker, markerGroup, resetMap, MAP};
