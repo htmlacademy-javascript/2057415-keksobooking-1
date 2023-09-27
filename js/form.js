@@ -2,6 +2,7 @@ import {sendData} from './api.js';
 import {getSuccessErrorMessage} from './success-error-message.js';
 import {resetPreviews} from './upload-images.js';
 import {resetMap, MAP} from './map.js';
+import {resetSliderValue, createSlider} from './form-slider';
 
 const adForm = document.querySelector('.ad-form');
 const MIN_SYMBOLS_VALUE = 30;
@@ -26,7 +27,7 @@ const adFormTimeIn = adForm.querySelector('#timein');
 const adFormTimeOut = adForm.querySelector('#timeout');
 const adFormTimeinAndTimeout = adForm.querySelector('.ad-form__element--time');
 const adFormSubmit = adForm.querySelector('.ad-form__submit');
-//const adFormReset = document.querySelector('.ad-form__reset');
+const adFormReset = document.querySelector('.ad-form__reset');
 const {getSuccessMessage, getErrorMessage} = getSuccessErrorMessage();
 
 const onTypeChange = () => {
@@ -112,13 +113,18 @@ const unblockSubmitButton = () => {
   adFormSubmit.textContent = 'Опубликовать';
 };
 
-const onSuccess = () => {
+const clearForAndMap = () => {
   adForm.reset();
-  getSuccessMessage ();
-  unblockSubmitButton();
   resetPreviews();
   resetMap();
   MAP.closePopup();
+  resetSliderValue();
+};
+
+const onSuccess = () => {
+  getSuccessMessage ();
+  unblockSubmitButton();
+  clearForAndMap();
 };
 
 const onError = () => {
@@ -137,5 +143,9 @@ adForm.addEventListener('submit', (evt) => {
     getErrorMessage ();
   }
 });
+
+adFormReset.addEventListener('click', clearForAndMap);
+
+createSlider();
 
 export {TYPE_TO_MIN_PRICE, adFormType, adFormPrice};
