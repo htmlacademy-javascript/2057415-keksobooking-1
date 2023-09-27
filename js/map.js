@@ -2,11 +2,11 @@ import {generateCard} from './card.js';
 import {enableForms} from './disabler-form.js';
 import {resetButton, address} from './const.js';
 
-const ICONSIZE = [52, 52];
+const ICON_SIZE = [52, 52];
 const DEFAULT_LATITUDE = 35.6895;
 const DEFAULT_LONGITUDE = 139.692;
 const DEFAULT_TILE = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-const COPY_RIGHT_OPENSTREETMAP = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const COPYRIGHT_OPENSTREETMAP = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const MAP = L.map('map-canvas');
 // Настройка карты leaflet
 const ROUND_COORDINATE = 5;
@@ -26,13 +26,13 @@ const initializationMapStreet = () => {
 L.tileLayer(
   DEFAULT_TILE,
   {
-    attribution: COPY_RIGHT_OPENSTREETMAP,
+    attribution: COPYRIGHT_OPENSTREETMAP,
   },
 ).addTo(MAP);
 
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
-  iconSize: ICONSIZE,
+  iconSize: ICON_SIZE,
   iconAnchor: [26, 52],
 });
 
