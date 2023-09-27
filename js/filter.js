@@ -81,17 +81,20 @@ const mapFilterHandler = (offers) => {
   createMarker(filterSimilarOffersNear(offers));
 };
 
+const resetFilters = (offers) => {
+  mapFiltersElement.reset();
+  mapFilterHandler(offers);
+};
+
 const setFilterOffersContent = (offers) => {
   mapFiltersElement.addEventListener('change', debounce(() => mapFilterHandler(offers), DEBOUNCE_TIMEOUT_DELAY));
+  resetButton.addEventListener('click', () => {
+    resetFilters(offers);
+  });
 };
 
-const resetFilters = () => {
-  mapFiltersElement.reset();
-  mapFilterHandler();
-};
-
-resetButton.addEventListener('click', () => {
-  resetFilters();
-});
+//resetButton.addEventListener('click', () => {
+//  resetFilters();
+//});
 
 export {setFilterOffersContent, filterSimilarOffersNear, resetFilters};
