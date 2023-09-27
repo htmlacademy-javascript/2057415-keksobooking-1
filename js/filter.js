@@ -87,6 +87,7 @@ const setFilterOffersContent = (offers) => {
 
 const resetFilters = () => {
   mapFiltersElement.reset();
+  mapFilterHandler();
 };
 
 resetButton.addEventListener('click', () => {
