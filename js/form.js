@@ -2,7 +2,8 @@ import {sendData} from './api.js';
 import {getSuccessErrorMessage} from './success-error-message.js';
 import {resetPreviews} from './upload-images.js';
 import {resetMap, MAP} from './map.js';
-import {resetSliderValue, createSlider} from './form-slider';
+import {resetSliderValue, createSlider} from './form-slider.js';
+import {resetFilters} from './filter.js';
 
 const adForm = document.querySelector('.ad-form');
 const MIN_SYMBOLS_VALUE = 30;
@@ -113,18 +114,19 @@ const unblockSubmitButton = () => {
   adFormSubmit.textContent = 'Опубликовать';
 };
 
-const clearForAndMap = () => {
+const clearFormAndMap = () => {
   adForm.reset();
   resetPreviews();
   resetMap();
   MAP.closePopup();
   resetSliderValue();
+  resetFilters();
 };
 
 const onSuccess = () => {
   getSuccessMessage ();
   unblockSubmitButton();
-  clearForAndMap();
+  clearFormAndMap();
 };
 
 const onError = () => {
@@ -144,7 +146,7 @@ adForm.addEventListener('submit', (evt) => {
   }
 });
 
-adFormReset.addEventListener('click', clearForAndMap);
+adFormReset.addEventListener('click', clearFormAndMap);
 
 createSlider();
 
