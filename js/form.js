@@ -3,7 +3,7 @@ import {getSuccessErrorMessage} from './success-error-message.js';
 import {resetPreviews} from './upload-images.js';
 import {resetMap, MAP} from './map.js';
 import {resetSliderValue, createSlider} from './form-slider.js';
-//import {resetFilters} from './filter.js';
+import {resetFilters} from './filter.js';
 
 const adForm = document.querySelector('.ad-form');
 const MIN_SYMBOLS_VALUE = 30;
@@ -120,6 +120,7 @@ const clearFormAndMap = () => {
   resetMap();
   MAP.closePopup();
   resetSliderValue();
+  resetFilters();
 };
 
 const onSuccess = () => {
