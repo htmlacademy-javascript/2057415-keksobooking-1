@@ -1,6 +1,6 @@
 import {generateCard} from './card.js';
 import {enableForms} from './disabler-form.js';
-import {resetButton, address} from './const.js';
+import {address} from './const.js';
 
 const ICON_SIZE = [52, 52];
 const DEFAULT_LATITUDE = 35.6895;
@@ -80,9 +80,6 @@ const createMainMarker = (checkValidation) => {
   mainPinMarker.on('change', () => {
     checkValidation(address);
   });
-
-  // Вернуть масштаб и положение метки
-  resetButton.addEventListener('click', resetMap);
 };
 
 createMainMarker ();
