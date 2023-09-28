@@ -1,11 +1,12 @@
 import {showAlert} from './success-error-message.js';
 
-const GET_DATA_URL = 'https://28.javascript.pages.academy/keksobooking/data';
-const SEND_DATA_URL = 'https://28.javascript.pages.academy/keksobooking';
-const POST = 'POST';
+const ApiUrls = {
+  ROOT: 'https://28.javascript.pages.academy/keksobooking',
+  DATA: 'https://28.javascript.pages.academy/keksobooking/data'
+};
 
-function getData(onSuccess) {
-  fetch(GET_DATA_URL)
+const getData = (onSuccess) => {
+  fetch(ApiUrls.DATA)
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -19,12 +20,12 @@ function getData(onSuccess) {
     .catch(() => {
       throw new Error('Data not correct');
     });
-}
+};
 
-function sendData(formData, onSuccess, onError) {
-  fetch(SEND_DATA_URL,
+const sendData = (formData, onSuccess, onError) => {
+  fetch(ApiUrls.ROOT,
     {
-      method: POST,
+      method: 'POST',
       body: formData,
     },
   )
@@ -46,6 +47,6 @@ function sendData(formData, onSuccess, onError) {
       }
       throw new Error('Server is not responding');
     });
-}
+};
 
 export {getData, sendData};

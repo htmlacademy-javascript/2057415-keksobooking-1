@@ -5,7 +5,7 @@ const successMessage = successTemplate.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content;
 const errorMessage = errorTemplate.querySelector('.error');
 
-function showAlert (message) {
+const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '1000';
   alertContainer.style.position = 'absolute';
@@ -24,7 +24,7 @@ function showAlert (message) {
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
-}
+};
 
 const getSuccessErrorMessage = () => {
 
@@ -62,8 +62,5 @@ const getSuccessErrorMessage = () => {
 
   return {getSuccessMessage, getErrorMessage};
 };
-
-showAlert();
-getSuccessErrorMessage();
 
 export {showAlert, getSuccessErrorMessage};

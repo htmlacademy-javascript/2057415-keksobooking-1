@@ -1,12 +1,12 @@
 import {generateCard} from './card.js';
 import {enableForms} from './disabler-form.js';
-//import {getData} from './api.js';
+import {resetButton, address} from './const.js';
 
-const ICONSIZE = [52, 52];
+const ICON_SIZE = [52, 52];
 const DEFAULT_LATITUDE = 35.6895;
 const DEFAULT_LONGITUDE = 139.692;
 const DEFAULT_TILE = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-const COPY_RIGHT_OPENSTREETMAP = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const COPYRIGHT_OPENSTREETMAP = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const MAP = L.map('map-canvas');
 // Настройка карты leaflet
 const ROUND_COORDINATE = 5;
@@ -26,63 +26,65 @@ const initializationMapStreet = () => {
 L.tileLayer(
   DEFAULT_TILE,
   {
-    attribution: COPY_RIGHT_OPENSTREETMAP,
+    attribution: COPYRIGHT_OPENSTREETMAP,
   },
 ).addTo(MAP);
 
-// Отрисовка главной метки выбора адреса
-function createMainMarker (checkValidation) {
-  const mainPinIcon = L.icon({
-    iconUrl: './img/main-pin.svg',
-    iconSize: ICONSIZE,
-    iconAnchor: [26, 52],
+const mainPinIcon = L.icon({
+  iconUrl: './img/main-pin.svg',
+  iconSize: ICON_SIZE,
+  iconAnchor: [26, 52],
+});
+
+const mainPinMarker = L.marker(
+  {
+    lat: DEFAULT_LATITUDE,
+    lng: DEFAULT_LONGITUDE,
+  },
+  {
+    draggable: true,
+    icon: mainPinIcon,
+  },
+);
+//Сброс настроек карты до начальных значений
+const resetMap = () => {
+  mainPinMarker.setLatLng({
+    lat: DEFAULT_LATITUDE,
+    lng: DEFAULT_LONGITUDE,
   });
 
+  MAP.setView({
+    lat: DEFAULT_LATITUDE,
+    lng: DEFAULT_LONGITUDE,
+  }, 12);
 
-  const mainPinMarker = L.marker(
-    {
-      lat: DEFAULT_LATITUDE,
-      lng: DEFAULT_LONGITUDE,
-    },
-    {
-      draggable: true,
-      icon: mainPinIcon,
-    },
-  );
+  MAP.closePopup();
+};
+
+// Отрисовка главной метки выбора адреса
+const createMainMarker = (checkValidation) => {
 
   mainPinMarker.addTo(MAP);
 
   // Фиксирование координат главной метки и передача в поле адреса
-  const address = document.querySelector('#address');
 
-  function getAddressCoordinates (coordinates) {
-    address.value = `lat: ${(coordinates.lat).toFixed(ROUND_COORDINATE)}, lng: ${(coordinates.lng).toFixed(ROUND_COORDINATE)}`;
-  }
+  const getAddressCoordinates = (coordinates) => {
+    address.value = `${(coordinates.lat).toFixed(ROUND_COORDINATE)}, ${(coordinates.lng).toFixed(ROUND_COORDINATE)}`;
+  };
 
   mainPinMarker.on('moveend', (evt) => {
     const point = evt.target.getLatLng();
     getAddressCoordinates (point);
   });
 
-  const resetButton = document.querySelector('.ad-form__reset');
-
   mainPinMarker.on('change', () => {
     checkValidation(address);
   });
 
   // Вернуть масштаб и положение метки
-  resetButton.addEventListener('click', () => {
-    mainPinMarker.setLatLng({
-      lat: DEFAULT_LATITUDE,
-      lng: DEFAULT_LONGITUDE,
-    });
+  resetButton.addEventListener('click', resetMap);
+};
 
-    MAP.setView({
-      lat: DEFAULT_LATITUDE,
-      lng: DEFAULT_LONGITUDE,
-    }, 10);
-  });
-}
 createMainMarker ();
 
 // Отрисовка предложений
@@ -94,7 +96,7 @@ const pinIcon = L.icon({
   iconAnchor: [20, 40],
 });
 
-function createMarker(points) {
+const createMarker = (points) => {
   points.forEach((point) => {
     const {location: {lat, lng}} = point;
     const marker = L.marker(
@@ -111,8 +113,8 @@ function createMarker(points) {
       .addTo(markerGroup)
       .bindPopup(generateCard(point));
   });
-}
+};
 
 initializationMapStreet();
 
-export {createMarker, markerGroup};
+export {createMarker, markerGroup, resetMap, MAP};

@@ -1,6 +1,3 @@
-//import { getRandomMeHouseDreamArray } from './data.js';
-//import { getRandomNumber } from './utils.js';
-
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const typesHouseObj = {

@@ -1,6 +1,9 @@
 import {sendData} from './api.js';
 import {getSuccessErrorMessage} from './success-error-message.js';
 import {resetPreviews} from './upload-images.js';
+import {resetMap, MAP} from './map.js';
+import {resetSliderValue, createSlider} from './form-slider.js';
+import {resetFilters} from './filter.js';
 
 const adForm = document.querySelector('.ad-form');
 const MIN_SYMBOLS_VALUE = 30;
@@ -25,7 +28,7 @@ const adFormTimeIn = adForm.querySelector('#timein');
 const adFormTimeOut = adForm.querySelector('#timeout');
 const adFormTimeinAndTimeout = adForm.querySelector('.ad-form__element--time');
 const adFormSubmit = adForm.querySelector('.ad-form__submit');
-//const adFormReset = document.querySelector('.ad-form__reset');
+const adFormReset = document.querySelector('.ad-form__reset');
 const {getSuccessMessage, getErrorMessage} = getSuccessErrorMessage();
 
 const onTypeChange = () => {
@@ -51,7 +54,7 @@ pristine.addValidator(adFormTitle, validateTitleLength, `Введите от ${M
 const validatePriceMax = (value) => value >= 0 && value <= MAX_PRICE;
 pristine.addValidator(adFormPrice, validatePriceMax, `Значение цены от 0 до ${MAX_PRICE} руб.`);
 
-const TYPETOMINPRICE = {
+const TYPE_TO_MIN_PRICE = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
@@ -60,13 +63,13 @@ const TYPETOMINPRICE = {
 };
 
 const typeToPricePlaceholder = () => {
-  adFormPrice.placeholder = TYPETOMINPRICE[adFormType.value];
+  adFormPrice.placeholder = TYPE_TO_MIN_PRICE[adFormType.value];
   return true;
 };
 
 pristine.addValidator(adFormPrice, typeToPricePlaceholder, 'this');
 
-const validateTypeToMinPrice = (value) => value >= TYPETOMINPRICE[adFormType.value];
+const validateTypeToMinPrice = (value) => value >= TYPE_TO_MIN_PRICE[adFormType.value];
 
 pristine.addValidator(adFormPrice, validateTypeToMinPrice, 'Слишком маленькая цена');
 
@@ -79,7 +82,7 @@ const roomsToGuests = {
 
 const validateCapacity = () => roomsToGuests[adFormRoomNumber.value].includes(adFormCapacity.value);
 
-function getFaultMessage () {
+const getFaultMessage = () => {
   if (adFormRoomNumber.value === '100') {
     return '100 комнат не для гостей';
   } if (adFormCapacity.value === '0') {
@@ -89,7 +92,7 @@ function getFaultMessage () {
       ${adFormRoomNumber.value} ${adFormRoomNumber.value === '1' ? 'комнате' : 'комнатах'} нельзя разместить
       ${adFormCapacity.value.toLowerCase()} гостей`;
   }
-}
+};
 
 pristine.addValidator(adFormCapacity, validateCapacity, getFaultMessage);
 
@@ -111,11 +114,19 @@ const unblockSubmitButton = () => {
   adFormSubmit.textContent = 'Опубликовать';
 };
 
-const onSuccess = () => {
+const clearFormAndMap = () => {
   adForm.reset();
+  resetPreviews();
+  resetMap();
+  MAP.closePopup();
+  resetSliderValue();
+  resetFilters();
+};
+
+const onSuccess = () => {
   getSuccessMessage ();
   unblockSubmitButton();
-  resetPreviews();
+  clearFormAndMap();
 };
 
 const onError = () => {
@@ -135,4 +146,8 @@ adForm.addEventListener('submit', (evt) => {
   }
 });
 
-export {TYPETOMINPRICE, adFormType, adFormPrice};
+adFormReset.addEventListener('click', clearFormAndMap);
+
+createSlider();
+
+export {TYPE_TO_MIN_PRICE, adFormType, adFormPrice};

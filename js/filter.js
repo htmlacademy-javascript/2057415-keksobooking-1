@@ -1,5 +1,6 @@
 import {markerGroup, createMarker} from './map.js';
 import {debounce} from './debounce.js';
+//import {resetButton} from './const.js';
 
 const FILTER_PRICE_VALUES = {
   low: 10000,
@@ -77,12 +78,17 @@ const filterSimilarOffersNear = (offers) => {
 
 const mapFilterHandler = (offers) => {
   markerGroup.clearLayers();
-  //return filterSimilarOffersNear(offers);
   createMarker(filterSimilarOffersNear(offers));
+};
+
+const resetFilters = () => {
+  mapFiltersElement.reset();
+  const event = new Event('change');
+  mapFiltersElement.dispatchEvent(event);
 };
 
 const setFilterOffersContent = (offers) => {
   mapFiltersElement.addEventListener('change', debounce(() => mapFilterHandler(offers), DEBOUNCE_TIMEOUT_DELAY));
 };
 
-export {setFilterOffersContent, filterSimilarOffersNear};
+export {setFilterOffersContent, filterSimilarOffersNear, resetFilters};

@@ -1,16 +1,17 @@
 // Настройка слайдера
-import {TYPETOMINPRICE, adFormType, adFormPrice} from './form.js';
+import {TYPE_TO_MIN_PRICE, adFormType, adFormPrice} from './form.js';
+//import {resetButton} from './const.js';
 
 const sliderElement = document.querySelector('.ad-form__slider');
 
-function createSlider() {
+const createSlider = () => {
 
   noUiSlider.create(sliderElement, {
     range: {
       min: 0,
       max: 100000,
     },
-    start: TYPETOMINPRICE[adFormType.value],
+    start: TYPE_TO_MIN_PRICE[adFormType.value],
     step: 1000,
     connect: 'lower',
     format: {
@@ -76,8 +77,18 @@ function createSlider() {
       });
     }
   });
-}
+};
 
-createSlider();
+//const resetSliderValue = () => {
+//resetButton.addEventListener ('click', () => {
+//  sliderElement.noUiSlider.reset();
+//});
+//};
 
-export {createSlider};
+const resetSliderValue = () => {
+  sliderElement.noUiSlider.reset();
+};
+
+//createSlider();
+
+export {createSlider, resetSliderValue};
