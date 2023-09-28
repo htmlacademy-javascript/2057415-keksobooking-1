@@ -9,7 +9,7 @@ const adForm = document.querySelector('.ad-form');
 const MIN_SYMBOLS_VALUE = 30;
 const MAX_SYMBOLS_VALUE = 100;
 const MAX_PRICE = 100000;
-const сonfig = {
+const config = {
   classTo: 'ad-form__element',
   errorClass: 'ad-form__element--invalid',
   successClass: 'ad-form__element--valid',
@@ -17,7 +17,22 @@ const сonfig = {
   errorTextClass: 'error__message'
 };
 
-const pristine = new Pristine(adForm, сonfig, true);
+const TYPE_TO_MIN_PRICE = {
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000,
+};
+
+const roomsToGuests = {
+  1: ['1'],
+  2: ['1', '2'],
+  3: ['1', '2', '3'],
+  100: ['0']
+};
+
+const pristine = new Pristine(adForm, config, true);
 
 const adFormTitle = adForm.querySelector('#title');
 const adFormRoomNumber = adForm.querySelector('#room_number');
@@ -54,14 +69,6 @@ pristine.addValidator(adFormTitle, validateTitleLength, `Введите от ${M
 const validatePriceMax = (value) => value >= 0 && value <= MAX_PRICE;
 pristine.addValidator(adFormPrice, validatePriceMax, `Значение цены от 0 до ${MAX_PRICE} руб.`);
 
-const TYPE_TO_MIN_PRICE = {
-  bungalow: 0,
-  flat: 1000,
-  hotel: 3000,
-  house: 5000,
-  palace: 10000,
-};
-
 const typeToPricePlaceholder = () => {
   adFormPrice.placeholder = TYPE_TO_MIN_PRICE[adFormType.value];
   return true;
@@ -72,13 +79,6 @@ pristine.addValidator(adFormPrice, typeToPricePlaceholder, 'this');
 const validateTypeToMinPrice = (value) => value >= TYPE_TO_MIN_PRICE[adFormType.value];
 
 pristine.addValidator(adFormPrice, validateTypeToMinPrice, 'Слишком маленькая цена');
-
-const roomsToGuests = {
-  1: ['1'],
-  2: ['1', '2'],
-  3: ['1', '2', '3'],
-  100: ['0']
-};
 
 const validateCapacity = () => roomsToGuests[adFormRoomNumber.value].includes(adFormCapacity.value);
 

@@ -1,6 +1,5 @@
 import {markerGroup, createMarker} from './map.js';
 import {debounce} from './debounce.js';
-//import {resetButton} from './const.js';
 
 const FILTER_PRICE_VALUES = {
   low: 10000,

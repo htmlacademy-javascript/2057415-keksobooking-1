@@ -34,7 +34,6 @@ userPhotosFileChoser.addEventListener('change', () => {
 const resetPreviews = () => {
   previewAvatar.src = DEFAULT_IMAGE;
   previewPhoto.style.backgroundImage = 'none';
-  //previewPhoto.innerHTML = '';
 };
 
 export {resetPreviews};
